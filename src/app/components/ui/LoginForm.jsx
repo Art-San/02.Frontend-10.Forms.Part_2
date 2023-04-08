@@ -5,7 +5,16 @@ import TextField from '../common/form/TextField'
 const LoginForm = () => {
     const [data, setData] = useState({ email: '', password: '' })
     const [errors, setErrors] = useState({})
-    const handleChange = ({ target }) => {
+    // const handleChange = ({ target }) => {
+    //     setData((prevState) => ({
+    //         ...prevState,
+    //         [target.name]: target.value
+    //     }))
+    // }
+
+    // было так ({target}). подогнали все поля из за Select (так как получаем массив объектов с полями label: & value:)
+    // оставили таргет без диструкторизаци
+    const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value

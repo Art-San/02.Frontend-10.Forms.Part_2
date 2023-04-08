@@ -3,6 +3,12 @@ import PropTypes from 'prop-types'
 
 const TextField = ({ label, type, name, value, onChange, error }) => {
     const [showPassword, setShowPassword] = useState(false)
+
+    const handleChange = ({ target }) => {
+        // подогнали все поля из за Select (так как получаем массив объектов с полями label: & value:)
+        onChange({ name: target.name, value: target.value })
+    }
+
     const getInputClasses = () => {
         return 'form-control' + (error ? ' is-invalid' : '')
     }
@@ -18,7 +24,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
                     id={name}
                     name={name}
                     value={value}
-                    onChange={onChange}
+                    onChange={handleChange}
                     className={getInputClasses()}
                 />
                 {type === 'password' && (

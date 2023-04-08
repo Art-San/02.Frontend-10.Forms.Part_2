@@ -9,6 +9,10 @@ const SelectField = ({
     options,
     error
 }) => {
+    const handleChange = ({ target }) => {
+        // подогнали все поля из за Select (так как получаем массив объектов с полями label: & value:)
+        onChange({ name: target.name, value: target.value })
+    }
     const getInputClasses = () => {
         return 'form-select' + (error ? ' is-invalid' : '')
     }
@@ -30,7 +34,7 @@ const SelectField = ({
                 id="validationCustom04"
                 name="profession"
                 value={value}
-                onChange={onChange}
+                onChange={handleChange}
             >
                 <option disabled value="">
                     {defaultOption}
