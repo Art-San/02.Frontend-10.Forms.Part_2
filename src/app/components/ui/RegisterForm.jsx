@@ -101,43 +101,6 @@ const RegisterForm = () => {
                     onChange={handleChange}
                     options={professions}
                 />
-                <div className="mb-4">
-                    <label htmlFor="validationCustom04" className="form-label">
-                        Выберите вашу профессию
-                    </label>
-                    <select
-                        className="form-select"
-                        id="validationCustom04"
-                        name="profession"
-                        value={data.profession}
-                        onChange={handleChange}
-                    >
-                        <option disabled value="">
-                            Варианты...
-                        </option>
-                        {professions &&
-                            Object.keys(professions).map((professionName) => (
-                                <option
-                                    key={professions[professionName]._id}
-                                    value={professions[professionName]._id}
-                                >
-                                    {professions[professionName].name}
-                                </option>
-                            ))}
-                        {/* {professions?.map((profession, i) => (
-                            <option
-                                key={i}
-                                value={profession._id}
-                                selected={profession.id === data.profession}
-                            >
-                                {profession.name}
-                            </option>
-                        ))} */}
-                    </select>
-                    <div className="invalid-feedback">
-                        Please select a valid state.
-                    </div>
-                </div>
                 <button
                     type="submit"
                     disabled={!isValid}
