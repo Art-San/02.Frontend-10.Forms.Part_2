@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import { validator } from '../../utils/validator'
 import TextField from '../common/form/TextField'
+import api from '../../api'
+import SelectField from '../common/form/SelectField'
 
 const RegisterForm = () => {
-    const [data, setData] = useState({ email: '', password: '' })
+    const [data, setData] = useState({
+        email: '',
+        password: '',
+        profession: ''
+    })
     const [errors, setErrors] = useState({})
+    const [professions, setProfessions] = useState()
+
+    useEffect(() => {
+        api.professions.fetchAll().then((data) => {
+            setProfessions(data)
+        })
+    }, [])
+
     const handleChange = ({ target }) => {
         setData((prevState) => ({
             ...prevState,
@@ -34,6 +48,11 @@ const RegisterForm = () => {
             min: {
                 message: 'Пароль должен быть не менее 8 символов',
                 value: 8
+            }
+        },
+        profession: {
+            isRequired: {
+                message: 'Обязательно выберите вашу профессию'
             }
         }
     }
@@ -74,6 +93,51 @@ const RegisterForm = () => {
                     onChange={handleChange}
                     error={errors.password}
                 />
+                <SelectField
+                    defaultOption="Choose..."
+                    label="Выберите вашу профессию"
+                    value={data.profession}
+                    error={errors.profession}
+                    onChange={handleChange}
+                    options={professions}
+                />
+                <div className="mb-4">
+                    <label htmlFor="validationCustom04" className="form-label">
+                        Выберите вашу профессию
+                    </label>
+                    <select
+                        className="form-select"
+                        id="validationCustom04"
+                        name="profession"
+                        value={data.profession}
+                        onChange={handleChange}
+                    >
+                        <option disabled value="">
+                            Варианты...
+                        </option>
+                        {professions &&
+                            Object.keys(professions).map((professionName) => (
+                                <option
+                                    key={professions[professionName]._id}
+                                    value={professions[professionName]._id}
+                                >
+                                    {professions[professionName].name}
+                                </option>
+                            ))}
+                        {/* {professions?.map((profession, i) => (
+                            <option
+                                key={i}
+                                value={profession._id}
+                                selected={profession.id === data.profession}
+                            >
+                                {profession.name}
+                            </option>
+                        ))} */}
+                    </select>
+                    <div className="invalid-feedback">
+                        Please select a valid state.
+                    </div>
+                </div>
                 <button
                     type="submit"
                     disabled={!isValid}
