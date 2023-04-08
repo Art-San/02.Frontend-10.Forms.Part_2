@@ -1,5 +1,5 @@
 import React from 'react'
-import Select from 'react-select' // Множественный select
+import Select from 'react-select'
 import PropTypes from 'prop-types'
 
 const MultiSelectField = ({ options, onChange, name, label }) => {
@@ -17,8 +17,8 @@ const MultiSelectField = ({ options, onChange, name, label }) => {
     return (
         <div className="mb-4">
             <label htmlFor={name}>{label}</label>
-            <Select // Множественный select
-                isMulti // можно выбирать несколько вариантов
+            <Select
+                isMulti
                 closeMenuOnSelect={false}
                 options={optionsArray}
                 className="basic-multi-select"

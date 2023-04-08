@@ -5,7 +5,6 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
     const [showPassword, setShowPassword] = useState(false)
 
     const handleChange = ({ target }) => {
-        // подогнали все поля из за Select (так как получаем массив объектов с полями label: & value:)
         onChange({ name: target.name, value: target.value })
     }
 

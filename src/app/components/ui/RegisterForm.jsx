@@ -5,6 +5,7 @@ import api from '../../api'
 import SelectField from '../common/form/SelectField'
 import RadioField from '../common/form/RadioField'
 import MultiSelectField from '../common/form/MultiSelectField'
+import CheckBoxField from '../common/form/CheckBoxField'
 
 const RegisterForm = () => {
     const [data, setData] = useState({
@@ -12,7 +13,8 @@ const RegisterForm = () => {
         password: '',
         profession: '',
         sex: 'male',
-        qualities: []
+        qualities: [],
+        licence: false
     })
     const [errors, setErrors] = useState({})
     const [professions, setProfessions] = useState([])
@@ -27,8 +29,6 @@ const RegisterForm = () => {
         })
     }, [])
 
-    // было так ({target}). подогнали все поля из за Select (так как получаем массив объектов с полями label: & value:)
-    // оставили таргет без диструкторизаци
     const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
@@ -63,6 +63,12 @@ const RegisterForm = () => {
         profession: {
             isRequired: {
                 message: 'Обязательно выберите вашу профессию'
+            }
+        },
+        licence: {
+            isRequired: {
+                message:
+                    'Вы не можете использовать наш сервис без подтверждения лецинзионного соглашения'
             }
         }
     }
@@ -122,12 +128,20 @@ const RegisterForm = () => {
                     onChange={handleChange}
                     label="Выберите ваш пол"
                 />
-                <MultiSelectField // Множественный select
+                <MultiSelectField
                     label="Выберите ваши качества"
                     name="qualities"
                     options={qualities}
                     onChange={handleChange}
                 />
+                <CheckBoxField
+                    name="licence"
+                    value={data.licence}
+                    onChange={handleChange}
+                    error={errors.licence}
+                >
+                    Подтверлите <a>лецинзионное соглашение</a>
+                </CheckBoxField>
                 <button
                     type="submit"
                     disabled={!isValid}

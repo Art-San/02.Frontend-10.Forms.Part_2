@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 const RadioField = ({ options, name, onChange, value, label }) => {
     const handleChange = ({ target }) => {
-        // подогнали все поля из за Select (так как получаем массив объектов с полями label: & value:)
         onChange({ name: target.name, value: target.value })
     }
     return (

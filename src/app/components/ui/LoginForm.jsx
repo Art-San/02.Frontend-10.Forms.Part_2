@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { validator } from '../../utils/validator'
+import CheckBoxField from '../common/form/CheckBoxField'
 import TextField from '../common/form/TextField'
 
 const LoginForm = () => {
-    const [data, setData] = useState({ email: '', password: '' })
+    const [data, setData] = useState({ email: '', password: '', stayOn: false })
     const [errors, setErrors] = useState({})
-    // const handleChange = ({ target }) => {
-    //     setData((prevState) => ({
-    //         ...prevState,
-    //         [target.name]: target.value
-    //     }))
-    // }
-
-    // было так ({target}). подогнали все поля из за Select (так как получаем массив объектов с полями label: & value:)
-    // оставили таргет без диструкторизаци
     const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
@@ -83,6 +75,13 @@ const LoginForm = () => {
                     onChange={handleChange}
                     error={errors.password}
                 />
+                <CheckBoxField
+                    name="stayOn"
+                    value={data.stayOn}
+                    onChange={handleChange}
+                >
+                    Оставаться в системе
+                </CheckBoxField>
                 <button
                     type="submit"
                     disabled={!isValid}
