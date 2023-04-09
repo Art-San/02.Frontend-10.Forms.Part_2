@@ -19,9 +19,7 @@ const RegisterForm = () => {
     const [errors, setErrors] = useState({})
     const [professions, setProfessions] = useState([])
     const [qualities, setQualities] = useState([])
-    // const [qualities, setQualities] = useState({}) // сделать полностью переиспользуемыми
 
-    // сделать полностью переиспользуемыми
     useEffect(() => {
         api.professions.fetchAll().then((data) => {
             const professionsList = Object.keys(data).map((professionName) => ({
@@ -39,15 +37,6 @@ const RegisterForm = () => {
             setQualities(qualitiesList)
         })
     }, [])
-
-    // useEffect(() => {
-    //     api.professions.fetchAll().then((data) => {
-    //         setProfessions(data)
-    //     })
-    //     api.qualities.fetchAll().then((data) => {
-    //         setQualities(data)
-    //     })
-    // }, [])
 
     const handleChange = (target) => {
         setData((prevState) => ({
@@ -105,7 +94,6 @@ const RegisterForm = () => {
 
     const isValid = Object.keys(errors).length === 0
 
-    // 2. Создаем функции getProfessionById() и getQualities()
     const getProfessionById = (id) => {
         for (const prof of professions) {
             if (prof.value === id) {
@@ -128,9 +116,7 @@ const RegisterForm = () => {
         }
         return qualitiesArray
     }
-    // 1. registerForm в handleSubmit() нам необходимо преобразовать данные. Функция получится такая:
-    // Таким образом мы получим новый объект. В дальнейшем его нужно будет выводить не в консоль,
-    // а в функцию регистрации (об этом в следующих уроках).
+
     const handleSubmit = (e) => {
         e.preventDefault()
         const isValid = validate()
@@ -143,12 +129,6 @@ const RegisterForm = () => {
         })
     }
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault()
-    //     const isValid = validate()
-    //     if (!isValid) return
-    //     console.log(data)
-    // }
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -169,7 +149,7 @@ const RegisterForm = () => {
                 />
                 <SelectField
                     defaultOption="Choose..."
-                    name="profession" // Последние корректировки
+                    name="profession"
                     label="Выберите вашу профессию"
                     value={data.profession}
                     error={errors.profession}
@@ -190,7 +170,7 @@ const RegisterForm = () => {
                 <MultiSelectField
                     options={qualities}
                     onChange={handleChange}
-                    defaultValue={data.qualities} // Последние корректировки
+                    defaultValue={data.qualities}
                     name="qualities"
                     label="Выберите ваши качества"
                 />

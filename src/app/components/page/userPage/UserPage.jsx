@@ -9,9 +9,9 @@ const UserPage = ({ userId }) => {
     const [user, setUser] = useState()
     useEffect(() => {
         api.users.getById(userId).then((data) => setUser(data))
-    }, []) // небало [], ошибка  идет до 10. Формы. Часть 2 8. Последние корректировки
+    }, [])
     const handleClick = () => {
-        history.push('/users')
+        history.push(history.location.pathname + '/edit') // изменить пользователя
     }
     if (user) {
         return (
@@ -21,7 +21,7 @@ const UserPage = ({ userId }) => {
                 <Qualities qualities={user.qualities} />
                 <p>completedMeetings: {user.completedMeetings}</p>
                 <h2>Rate: {user.rate}</h2>
-                <button onClick={handleClick}> Все Пользователи</button>
+                <button onClick={handleClick}> Изменить</button>
             </div>
         )
     } else {
