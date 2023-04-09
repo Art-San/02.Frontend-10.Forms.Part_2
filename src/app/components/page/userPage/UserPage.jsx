@@ -9,7 +9,7 @@ const UserPage = ({ userId }) => {
     const [user, setUser] = useState()
     useEffect(() => {
         api.users.getById(userId).then((data) => setUser(data))
-    })
+    }, []) // небало [], ошибка  идет до 10. Формы. Часть 2 8. Последние корректировки
     const handleClick = () => {
         history.push('/users')
     }

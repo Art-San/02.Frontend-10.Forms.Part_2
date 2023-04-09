@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 const CheckBoxField = ({ name, value, onChange, children, error }) => {
     const handleChange = ({ target }) => {
-        onChange({ name: name, value: !value })
+        onChange({ name, value: !value })
+        // onChange({ name: name, value: !value }) // Последние корректировки
     }
     const getInputClasses = () => {
         return 'form-check-input' + (error ? ' is-invalid' : '')

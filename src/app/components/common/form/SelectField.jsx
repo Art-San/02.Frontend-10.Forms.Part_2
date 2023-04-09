@@ -7,7 +7,8 @@ const SelectField = ({
     onChange,
     defaultOption,
     options,
-    error
+    error,
+    name
 }) => {
     const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value })
@@ -15,13 +16,25 @@ const SelectField = ({
     const getInputClasses = () => {
         return 'form-select' + (error ? ' is-invalid' : '')
     }
+
     const optionsArray =
         !Array.isArray(options) && typeof options === 'object'
-            ? Object.keys(options).map((optionName) => ({
-                  name: options[optionName].name,
-                  value: options[optionName]._id
-              }))
+            ? Object.values(options)
             : options
+
+    // Для того, чтобы компоненты selectField и multiSelectField сделать полностью переиспользуемыми,
+    // мы рекомендуем перенести преобразование данных из этих компонентов в registerForm.
+    // Для этого:
+    // В компонентах selectField и multiSelectField
+    // заменяем преобразование в массив optionsArray на следующее:
+
+    // const optionsArray =
+    //     !Array.isArray(options) && typeof options === 'object'
+    //         ? Object.keys(options).map((optionName) => ({
+    //               name: options[optionName].name,
+    //               value: options[optionName]._id
+    //           }))
+    //         : options
 
     return (
         <div className="mb-4">
@@ -30,20 +43,26 @@ const SelectField = ({
             </label>
             <select
                 className={getInputClasses()}
-                id="validationCustom04"
-                name="profession"
+                id={name} // Последние корректировки
+                name={name} // Последние корректировки
                 value={value}
                 onChange={handleChange}
             >
                 <option disabled value="">
                     {defaultOption}
                 </option>
-                {optionsArray &&
+                {optionsArray.length > 0 && // делать полностью переиспользуемыми
+                    optionsArray.map((option) => (
+                        <option value={option.value} key={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                {/* {optionsArray &&
                     optionsArray.map((option) => (
                         <option key={option.value} value={option.value}>
                             {option.name}
                         </option>
-                    ))}
+                    ))} */}
             </select>
             {error && <div className="invalid-feedback">{error}</div>}
         </div>
@@ -56,7 +75,8 @@ SelectField.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
     error: PropTypes.any,
-    options: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    name: PropTypes.string // Последние корректировки
 }
 
 export default SelectField
